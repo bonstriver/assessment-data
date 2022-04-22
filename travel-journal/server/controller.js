@@ -13,10 +13,23 @@ const sequelize = new Sequelize (CONNECTION_STRING, {
 })
 
 module.exports = {
-    getCity: (req, res) => {
+    // deleteCity: (req, res) => {
+    //     sequelize.query(`
+        
+    //     `)
+    //     .then(dbRes => res.status(200).send(dbRes[0]))
+    //     .catch(err => console.log(err))
+    // },
+
+    getCities: (req, res) => {
         sequelize.query(`
-                
+        SELECT cities.city_id, cities.name, cities.rating, countries.country_id, countries.name
+        FROM cities
+        INNER JOIN countries
+        ON cities.country_id=country.country_id;       
         `)
+        .then(dbRes => res.status(200).send(dbRes[0]))
+        .catch(err => console.log(err))
     },
 
     createCity: (req, res) => {
